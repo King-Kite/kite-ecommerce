@@ -1,0 +1,186 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block title %} {{ site_name }} - About Us {% endblock title %}
+
+{% block content %}
+
+<!-- Carousel Start-->
+    <div id="demo" class="carousel slide my-1 mb-2" data-ride="carousel">
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img class="carousel-image img-responsive" src="{% static 'pages/images/1.jpg' %}" alt="1">
+                <div class="carousel-about">
+                    <h1 class="about-h animated fadeInDown font-weight-bold text-center my-sm-3 my-md-4">
+                        <span class="text-uppercase">{{ site_name }}</span> Group
+                    </h1>
+                    <p class="about-p animated fadeInUp text-center">
+                        A Warm Welcome to the Best Mattress in Nigeria Manufacturer
+                       <br>
+                       <br>
+                       <span class="bg-dark font-weight-bold font-italic text-danger"><big>Since 1982</big></span>, Our Story in Brief!
+                    </p>
+                </div>
+            </div>
+        </div>
+<!-- Carousel Stop-->
+
+<!-- Our Story Section Start -->
+    <section>
+        <div class="container my-3">
+            <div class="d-flex justify-content-center align-items-stretch">
+                <h3 class="font-weight-bold">Our Story</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6 shadow d-flex align-items-center my-2">
+                    <img class="about img-responsive" src="{% static 'pages/images/1.jpg' %}" alt="hutomo-abrianto">
+                </div>
+                <div class="col-md-6 shadow my-2 d-flex flex-column justify-content-center">
+                    <h4 class="text-center font-weight-bold font-italic">{{ site_name }} Group</h4>
+                    <p class="text-danger text-center font-italic">Unique foam for maximum comfort</p>
+                    <h5 class="font-weight-bold font-italic text-danger">Since 1982</h5>
+                    <em class="text-wrap my-1">
+                        <h5><span class="text-uppercase">{{ site_name }}</span> brand of polyurethance products were
+                        registered in 1981 and started commercially in 1982.</h5>
+                    </em>
+                    <blockquote>
+                        With the Vision to Product Best Mattress in Nigeria, {{ site_name }} Group was
+                        Incorporated in the year 1981. The {{ site_name }} Group started its activity as a
+                        single plant in Ilorin Kwara State of Nigeria under the brand of <em class="text-uppercase">{{ site_name }}</em>
+                        for production of mattress.<em class="text-uppercase">{{ site_name }}</em> mattresses became instantly the top
+                        choice of selective clients and hence ranked as the Best Mattress in Nigeria.
+                        Mattress by {{ site_name }} Group are manufactured by State of the art machinery which
+                        provides the ultimate comfort by giving the best support to your body contours.
+                        We offer the ultimate luxury.
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Our Story Section Stop -->
+
+<!-- Approach & Methodology & Philsophy Section Start -->
+    <section>
+        <div class="container my-3">
+            <div class="row">
+                <!-- Approach Start -->
+                <div class="col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow">
+                        <span class="d-flex justify-content-center"><i class="bx bxs-institution bx-md"></i></span>
+                        <h4 class="text-center">OUR APPROACH</h4>
+                        <p class="text-wrap">
+                           We strive to exceed our customer's expectations. So
+                           we take care to provide the product with a mark of high
+                           quality. We have intentionally acclaimed systems of quality
+                           assessment. We manually examine the products before each delivery
+                           alse.
+                        </p>
+                    </div>
+                </div>
+                <!-- Approach Stop -->
+
+                <!-- Methodology Start -->
+                <div class="col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow">
+                        <span class="d-flex justify-content-center"><i class="bx bxs-grid bx-md"></i></span>
+                        <h4 class="text-center">METHODOLOGY</h4>
+                        <p class="text-wrap">
+                            We meet the expectations of out customers and go the
+                            extra mile to exceed that. We are dedicated to absolute
+                            quality in every aspect of our business, from the selection
+                            of raw materials, production, testing process, packaging, selling
+                            to after sale service. With our unwavering commitment to quality, new
+                            innovations and latest tachnology. We have set our standards so high and
+                            that makes us stand in the forefront.
+                        </p>
+                    </div>
+                </div>
+                <!-- Methodology Stop -->
+
+                <!-- Philosophy Start -->
+                <div class="col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow">
+                        <span class="d-flex justify-content-center"><i class="bx bxs-report bx-md"></i></span>
+                        <h4 class="text-center">OUR FOAM PHILOSOPHY</h4>
+                        <p class="text-wrap">
+                            All of our foams meet strict environmental standards to keep you and
+                            the planet safe. Our latex is Oeko-Tex certified <i class="bx bx-certificate"></i>
+                            and the rest of our foams are Certi-Pur certified <i class="bx bx-certificate"></i>.
+                            Which means, they're free of harmful, ozone-depleting chemicals and low in
+                            Volatile Organic Compounds (VOC) emissions.
+                        </p>
+                    </div>
+                </div>
+                <!-- Philosophy Stop -->
+            </div>
+        </div>
+    </section>
+<!-- Approach & Methodology & Philsophy Section Stop -->
+
+<!-- Best Mattress & Form Section Start -->
+    <section>
+        <div class="container my-3">
+            <div class="d-flex flex-column justify-content-start align-items-stretch">
+                <span class="text-muted">Since 1982</span>
+                <h4 class="font-weight-bold">BEST MATTRESS & FOAM</h4>
+            </div>
+            <div class="row">
+                <!-- Comfort Start -->
+                <div class="col-12 col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow text-wrap">
+                        <div class="d-flex">
+                            <i class="bx bx-health bx-md"></i>
+                            <h3 class="mx-3">Comfort</h3>
+                        </div>
+                        <p>
+                            Provision of maximum comfort is our major concern. So we follow a
+                            steadfast quality process in the making of the mattresses, cushions,
+                            pillow, underlays and other related products.
+                        </p>
+                    </div>
+                </div>
+                <!-- Comfort Stop -->
+
+                <!-- Art Start -->
+                <div class="col-12 col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow text-wrap">
+                        <div class="d-flex">
+                            <i class="bx bx-font-family bx-md"></i>
+                            <h3 class="mx-3">Art</h3>
+                        </div>
+                        <p>
+                            Our eye for beauty is another quality that makes our product class
+                            apart. We always give the best designs in alluring colors.
+                        </p>
+                    </div>
+                </div>
+                <!-- Art Stop -->
+
+                <!-- Quality Start -->
+                <div class="col-12 col-md-4 d-flex justify-content-center align-items-stretch my-2">
+                    <div class="col-12 shadow text-wrap">
+                        <div class="d-flex">
+                            <i class="bx bxs-badge-check bx-md"></i>
+                            <h3 class="mx-3">Quality</h3>
+                        </div>
+                        <p>
+                            Our uncompromising commitment is always for assurance of quality.
+                            {{ site_name }} offers perfect quality products and also trustable service.
+                        </p>
+                    </div>
+                </div>
+                <!-- Quality Stop -->
+            </div>
+        </div>
+    </section>
+<!-- Best Mattress & Form Section Stop -->
+
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}

@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'pages/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/mdb.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/style.css' %}">
+    <script src="{% static 'pages/jquery/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'pages/js/bootstrap.min.js' %}"></script>
+    {% block extra_head %} {% endblock extra_head %}
+</head>
+<body>
+
+    <!-- Header Start -->
+    <header>
+        {% include 'pages/navbar.html' %}
+    </header>
+    <!-- Header stop -->
+
+    <!-- Main Start -->
+    <main>
+        {% if messages %}
+            <div class="alert alert-primary alert-dismissible fade show m-2 p-2" role="alert">
+                {% for message in messages %}
+                    <p class="text-dark m-0 p-0">{{ message }}</p>
+                    <button type="button" class="close mx-1 p-1" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% comment %}
+            {% if form.errors %}
+                    {% for field in form %}
+                    <div class="alert alert-error alert-dismissible fade show m-2 p-2" role="alert">
+                        {% for error in field.errors %}
+                            <p class="text-dark m-0 p-0">{{ error|escape }}</p>
+                            <button type="button" class="close mx-1 p-1" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="alert alert-error alert-dismissible fade show m-2 p-2" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <p class="text-dark m-0 p-0">{{ error|escape }}</p>
+                            <button type="button" class="close mx-1 p-1" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+        {% endcomment %}
+
+        {% block content %} {% endblock content %}
+    </main>
+    <!-- Main Stop -->
+
+    <!-- Footer Start -->
+    <footer>
+        {% block footer %} {% endblock footer %}
+    </footer>
+    <!-- Footer Stop -->
+
+    <!-- Extra Scripts Start -->
+        {% block extra_script %} {% endblock extra_script %}
+    <!-- Extra Scripts Stop -->
+</body>
+</html>
+

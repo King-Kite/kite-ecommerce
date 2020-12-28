@@ -1,0 +1,77 @@
+{% extends "pages/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% load static %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="d-flex justify-content-center align-items-stretch">
+        <h4>{% trans "Sign In" %}</h4>
+    </div>
+    <div class="d-flex justify-content-center align-items-stretch">
+        {% get_providers as socialaccount_providers %}
+        <div class="d-flex flex-column"><p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p></div>
+        {% if socialaccount_providers %}
+            <p>
+                {% blocktrans with site.name as site_name %}Please sign in with one
+                of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+                for a {{ site_name }} account and sign in below:{% endblocktrans %}
+            </p>
+            <div class="socialaccount_ballot">
+                <ul class="socialaccount_providers">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </ul>
+              <div class="login-or">{% trans 'or' %}</div>
+            </div>
+            {% include "socialaccount/snippets/login_extra.html" %}
+        {% else %}
+        <div class="d-flex flex-column">
+            <p>{% blocktrans %}If you have not created an account yet, then please
+            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-group">
+                    {{ form.login }}
+                </div>
+                <div class="form-group">
+                    {{ form.password }}
+                    {{ form.password.non_field_errors }}
+                </div>
+                {% if redirect_field_value %}
+                    <div>
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <div>
+                        {{ form.remember }}
+                        <label>Remember Me.</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-rounded bg-dark text-light" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                </div>
+                <div class="text-left">
+                    <button class="btn btn-rounded bg-dark text-light btn-lg" type="submit">{% trans "Sign In" %}</button>
+                </div>
+            </form>
+        </div>
+        <div class="d-none d-lg-block col-lg-4">
+            <img class="about img-responsive" src="{% static 'pages/images/images-1.png' %}" alt="diamond">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

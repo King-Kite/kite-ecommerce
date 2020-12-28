@@ -1,0 +1,157 @@
+.avatar {
+    height: 70px;
+    width: 70px;
+}
+
+.about {
+    height: 200px;
+    width: 100%;
+}
+
+.carousel-desc {
+    position: absolute;
+    right: 10%;
+    top: 100px;
+    left: 10%;
+    z-index: 10;
+    padding: 20px 20px 20px 20px;
+    color: #fff;
+    text-align: left;
+}
+
+.carousel-desc h1 {
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.carousel-desc p {
+    line-height: 15px;
+    margin: 0;
+}
+
+.carousel-image {
+    height: 350px;
+    width: 100%;
+}
+
+.cart-image {
+    height: 200px;
+    width: 100%;
+}
+
+.feat {
+    height: 200px;
+    width: 100%;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+}
+
+.new {
+    height: 250px;
+    width: 100%;
+}
+
+.carousel-about {
+    position: absolute;
+    right: 10%;
+    bottom: 30px;
+    left: 10%;
+    z-index: 10;
+    padding: 20px 20px 20px 20px;
+    color: #fff;
+    text-align: left;
+}
+
+.carousel-about h1 {
+    font-size: 35px;
+    line-height: 25px;
+}
+
+.carousel-about p {
+    line-height: 15px;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .carousel-image {
+        height: 400px;
+        width: 100%;
+    }
+
+    .carousel-desc h1 {
+        font-size: 20px;
+        line-height: 80px;
+    }
+
+    .carousel-desc p {
+        line-height: 30px;
+        margin: 0;
+    }
+
+    .carousel-about h1 {
+        font-size: 50px;
+        line-height: 40px;
+    }
+
+    .carousel-about p {
+        font-size: 20px;
+        line-height: 30px;
+        margin: 0;
+    }
+
+    .about {
+        height: 300px;
+        width: 100%;
+    }
+
+    .feat {
+        height: 150px;
+        width: 100%;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .carousel-image {
+        height: 450px;
+        width: 100%;
+    }
+
+    .about {
+        height: 350px;
+        width: 100%;
+    }
+
+    .feat {
+        height: 175px;
+        width: 100%;
+    }
+
+}
+
+
+@media (min-width: 1200px) {
+    .carousel-image {
+        height: 500px;
+        width: 100%;
+    }
+
+    .about {
+        height: 400px;
+        width: 100%;
+    }
+
+    .feat {
+        height: 200px;
+        width: 100%;
+    }
+
+    .new {
+        height: 300px;
+        width: 100%;
+    }
+
+}
+

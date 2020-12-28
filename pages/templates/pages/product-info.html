@@ -1,0 +1,309 @@
+{% extends 'pages/base.html' %}
+
+{% load humanize %}
+
+{% load range_tags %}
+
+{% load thumbnail %}
+
+{% block title %} {{ site_name }} - Product Information {% endblock title %}
+
+{% block content %}
+
+<!-- Product Info Section Start -->
+    <section>
+        <div class="container my-3">
+            <div class="d-flex justify-content-center align-items-stretch">
+                <h4>Product Information</h4>
+            </div>
+            <div class="row">
+                <!-- Product Images Start -->
+                <div class="col-md-6 shadow d-flex my-2">
+                    <div class="row">
+                        <div class="col-12 m-1">
+                            {% thumbnail obj_product.image "500x300" crop="center" as im %}
+                                <img class="new img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                            {% endthumbnail %}
+                        </div>
+                        <div class="col-12 px-4 m-1">
+                            <div class="row">
+                                {% if obj_product.image1 %}
+                                    {% thumbnail obj_product.image1 "200x200" crop="center" as im %}
+                                    <div class="col-12 col-md-4 px-2 my-1">
+                                        <img class="feat img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                    </div>
+                                    {% endthumbnail %}
+                                {% endif %}
+                                {% if obj_product.image2 %}
+                                    {% thumbnail obj_product.image2 "200x200" crop="center" as im %}
+                                    <div class="col-12 col-md-4 px-2 my-1">
+                                        <img class="feat img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                    </div>
+                                    {% endthumbnail %}
+                                {% endif %}
+                                {% if obj_product.image3 %}
+                                    {% thumbnail obj_product.image3 "200x200" crop="center" as im %}
+                                    <div class="col-12 col-md-4 px-2 my-1">
+                                        <img class="feat img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                    </div>
+                                    {% endthumbnail %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Images Stop -->
+
+                <!-- Product Details Start -->
+                <div class="col-md-6 shadow my-2 d-flex flex-column justify-content-center">
+                    <h4 class="text-center font-weight-bold font-italic">{{ obj_product.name }}</h4>
+                    <p class="text-danger text-center font-italic">{{ obj_product.reviews.count }} Customer Reviews</p>
+                    <div class="d-flex justify-content-center">
+                        {% if obj_product.featured %}
+                            <h5 class="bg-primary rounded-lg text-center text-light font-weight-bold font-italic py-2 px-3 mx-3">Featured</h5>
+                        {% endif %}
+                        {% if obj_product.new %}
+                            <h5 class="bg-danger rounded-lg text-center text-light font-weight-bold font-italic py-2 px-3 mx-3">NEW</h5>
+                        {% endif %}
+                    </div>
+                    <p class="text-center">
+                        {{ obj_product.description }}
+                    </p>
+                </div>
+                <!-- Product Details Stop -->
+            </div>
+        </div>
+    </section>
+<!-- Product Info Section Stop -->
+
+<!-- Product Variants Section Start -->
+    <section>
+        <div class="d-flex justify-content-center align-items-stretch">
+            <h4>Product Varieties</h4>
+        </div>
+        <div class="container table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">S/N</th>
+                        <th class="text-center" scope="col">
+                            Size (Inch)<br>
+                            H - W - B
+                        </th>
+                        <th class="text-center" scope="col">Price (N)</th>
+                        <th class="text-center" scope="col">Add to Cart</th>
+                        <th class="text-center" scope="col">Remove from Cart</th>
+                        <th class="text-center" scope="col">Add to Wishlist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in obj_product.variants.all %}
+                    <tr>
+                        <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                        <td class="text-center">{{ item.size }}</td>
+                        {% if item.discount_price %}
+                            <td class="text-center">{{ item.discount_price| intcomma }}</td>
+                        {% else %}
+                            <td class="text-center">{{ item.price| intcomma }}</td>
+                        {% endif %}
+                        <td class="text-center">
+                            <a class="d-flex justify-content-center" href="{% url 'add-to-cart' item.pk %}">
+                                <i class="bx bxs-cart-add bx-sm bx-fade-right-hover"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="d-flex justify-content-center" href="{% url 'remove-from-cart' item.pk %}">
+                                <i class="bx bx-trash bx-sm bx-fade-right-hover"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="d-flex justify-content-center" href="{% url 'add-to-wishlist' item.pk %}">
+                                <i class="bx bxs-add-to-queue bx-sm bx-fade-right-hover"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+<!-- Product Variants Section Stop -->
+
+<!-- Reviews Section Start -->
+    <section>
+        <div class="container my-3">
+            <div class="d-flex justify-content-start">
+                <h4>Reviews</h4>
+            </div>
+            {% for review in page_obj %}
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="m-1">
+                            {% thumbnail review.author.profile.image "158x200" crop="center" as im %}
+                                <img class="avatar rounded-lg img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                            {% endthumbnail %}
+                        </div>
+                        <div class="m-1">
+                            <h6>{{ review.author.first_name }} {{ review.author.last_name }}</h6>
+                            {% if review.rating %}
+                                <div class="d-flex">
+                                    <p class="mr-1">Rating: </p>
+                                    {% for len in review.rating|range %}
+                                        <p><i class="bx bxs-star mx-1"></i></p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <p>{{ review.update_date|naturaltime }}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 mx-1">
+                        <p>{{ review.body }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>
+                    There are currently no reviews for this product.
+                    Leave a Review Below.
+                </p>
+            {% endfor %}
+        <!-- Pagination Start -->
+        {% if page_obj %}
+            <nav class="d-flex justify-content-center">
+                <ul class="pagination pg-dark">
+
+                    <!--Arrow Left Start-->
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                        </li>
+                    {% endif %}
+                        <li class="page-item active">
+                          <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+                            <span class="sr-only">(current)</span>
+                          </a>
+                        </li>
+                    <!-- Arrow Left Stop -->
+
+                    <!-- Arrow Right Start -->
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                    {% endif %}
+                    <!-- Arrow Right Stop -->
+                </ul>
+            </nav>
+        {% endif %}
+        <!-- Pagination Stop -->
+
+        </div>
+        <div class="container my-5">
+            {% if user.is_authenticated %}
+                {% if product_review %}
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <div class="m-1">
+                                {% thumbnail product_review.author.profile.image "158x200" crop="center" as im %}
+                                    <img class="avatar rounded-lg img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                {% endthumbnail %}
+                            </div>
+                            <div class="mx-1">
+                                <h6>Your Review</h6>
+                                {% if product_review.rating %}
+                                    <div class="d-flex">
+                                        <p class="mr-1">Rating: </p>
+                                        {% for len in product_review.rating|range %}
+                                            <p><i class="bx bxs-star mx-1"></i></p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <p>{{ product_review.update_date|naturaltime }}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 mx-1">
+                            <p>{{ product_review.body }}</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex flex-between">
+                        <a class="btn btn-rounded bg-primary text-white" href="{% url 'review-update' product_review.id %}">Update</a>
+                        <a class="btn btn-rounded bg-danger text-white" href="{% url 'review-delete' product_review.id %}">Delete</a>
+                    </div>
+                {% else %}
+                    <p>You have no review for this product. Click the icon to leave a review <button id="review_form_button" class="bg-white"><i class="bx bxs-edit bx-sm p-1"></i></button></p>
+                    <div id="review_form" class="d-none">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="col-12 col-md-8 col-lg-6 mx-2">
+                                <div class="form-group">
+                                    {{ form.body }}
+                                </div>
+                                {% for rating in form.rating %}
+                                    <div class="form-check form-check-inline">
+                                        {{ rating }}
+                                    </div>
+                                {% endfor %}
+                                <div>
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p>You must be logged in to leave a review.</p>
+                <span>
+                    Click<a class="btn btn-rounded btn-primary" href="/accounts/login/?next=/product-info/{{obj_product.slug}}/"> HERE</a> to login
+                </span>
+            {% endif %}
+        </div>
+    </section>
+<!-- Reviews Section Stop -->
+
+<!-- Related Products Section Start -->
+    <section>
+        <div class="container-fluid my-3">
+            <div class="d-flex justify-content-center align-items-stretch">
+                <h4>Related Products</h4>
+            </div>
+            <div class="row">
+                {% for related_product in related_products %}
+                    <div class="col-sm-12 col-md-6 col-lg-3 shadow d-flex flex-column align-items-center my-2">
+                        <a href="{% url 'product-info' related_product.slug %}">
+                                {% thumbnail related_product.image "480x376" crop="center" as im %}
+                                    <img class="new img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                {% endthumbnail %}
+                            <h5 class="text-dark text-center m-2">{{ related_product.type }} {{ related_product.category }}</h5>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+<!-- Related Products Section Stop -->
+
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}
+
+{% block extra_script %}
+    <script>
+        var review_form_button = document.getElementById('review_form_button')
+        var review_form = document.getElementById('review_form')
+
+
+        review_form_button.onclick = function(){
+            review_form.classList.toggle("d-none");
+        }
+
+
+    </script>
+{% endblock extra_script %}

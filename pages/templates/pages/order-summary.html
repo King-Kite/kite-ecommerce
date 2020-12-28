@@ -1,0 +1,148 @@
+{% extends 'pages/base.html' %}
+
+{% load humanize %}
+
+{% load thumbnail %}
+
+{% block title %} {{ site_name }} - Order Summary {% endblock title %}
+
+{% block content %}
+
+<!-- Order Summary Start -->
+  <div class="container">
+      <div class="d-flex justify-content-center align-items-stretch">
+          <h4>Order Summary</h4>
+      </div>
+      <div class="d-flex justify-content-center align-items-stretch">
+          <big>Active Orders<span class="badge badge-dark badge-pill m-2">{{ user_active_order.count }}</span></big>
+      </div>
+      <div class="m-2">
+          <div class="table-responsive text-nowrap">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">S/N</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Size</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Date Ordered</th>
+                          <th scope="col">Last Status Update</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for item in user_active_order %}
+                          <tr>
+                              <th scope="row">{{ forloop.counter }}</th>
+                              <td>
+                                  {% if item.product_image %}
+                                      {% thumbnail item.product_image "158x200" crop="center" as im %}
+                                          <img class="avatar rounded-lg img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                      {% endthumbnail %}
+                                  {% else %}
+                                      <span>No Image</span>
+                                  {% endif %}
+                              </td>
+                              <td>{{ item.product_name }}</td>
+                              <td>{{ item.product_size }}</td>
+                              <td>{{ item.product_price }}</td>
+                              <td>{{ item.quantity }}</td>
+                              <td>
+                                {% if item.status == 'RR' %}
+                                    Refund Requested
+                                {% elif item.status == 'BD' %}
+                                    Being Delivered
+                                {% else %}
+                                    Processing
+                                {% endif %}
+                                </td>
+                              <td>{{ item.create_date| naturaltime }}</td>
+                              <td>{{ item.update_date| naturaltime }}</td>
+                          </tr>
+                      {% empty %}
+                          <tr>
+                              <td colspan="5">You do not have an active order</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+
+      <div class="d-flex justify-content-center align-items-stretch">
+          <big>In-Active Orders<span class="badge badge-dark badge-pill m-2">{{ user_inactive_order.count }}</span></big>
+      </div>
+      <div class="m-2">
+          <div class="table-responsive text-nowrap">
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">S/N</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Size</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Date Ordered</th>
+                          <th scope="col">Last Status Update</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for item in user_inactive_order %}
+                          <tr>
+                              <th scope="row">{{ forloop.counter }}</th>
+                              <td>
+                                  {% if item.product_image %}
+                                      {% thumbnail item.product_image "158x200" crop="center" as im %}
+                                          <img class="avatar rounded-lg img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                      {% endthumbnail %}
+                                  {% else %}
+                                      <span>No Image</span>
+                                  {% endif %}
+                              </td>
+                              <td>{{ item.product_name }}</td>
+                              <td>{{ item.product_size }}</td>
+                              <td>{{ item.product_price }}</td>
+                              <td>{{ item.quantity }}</td>
+                              <td>
+                                {% if item.status == 'RG' %}
+                                    Refund Granted
+                                {% else %}
+                                    Delivered
+                                {% endif %}
+                                </td>
+                              <td>{{ item.create_date| naturaltime }}</td>
+                              <td>{{ item.update_date| naturaltime }}</td>
+                          </tr>
+                      {% empty %}
+                          <tr>
+                              <td colspan="5">All orders are active.</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+<!-- Order Summary Stop -->
+
+
+<!-- Check-Out More Products Button Start -->
+    <div class="container">
+        <div class="d-flex my-2 m-md-4 justify-content-center">
+            <a class="btn btn-dark p-3 text-light" href="{% url 'products' %}">
+                CHECK OUT MORE OF OUR PRODUCTS
+            </a>
+        </div>
+    </div>
+<!-- Check-Out More Products Button Stop -->
+
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}

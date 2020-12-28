@@ -1,0 +1,35 @@
+{% extends 'pages/base.html' %}
+
+{% block title %} {{ site_name }} - Update Review {% endblock title %}
+
+{% block content %}
+    <div class="container d-flex justify-content-start px-5">
+        <h4>Update Your Review</h4>
+    </div>
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col-12 col-md-8 col-lg-6 mx-2">
+                <div class="form-group">
+                    {{ form.body }}
+                </div>
+                <div class="form-group d-flex">
+                    {% for rating in form.rating %}
+                        <div class="form-check form-check-inline">
+                            {{ rating }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-danger text-white rounded-lg" type="submit">Update</button>
+                    <a class="btn btn-primary text-white rounded-lg" href="{% url 'product-info' review.product.slug %}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}

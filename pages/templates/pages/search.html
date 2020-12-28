@@ -1,0 +1,52 @@
+{% extends 'pages/base.html' %}
+
+{% load thumbnail %}
+
+{% block title %} {{ site_name }} - Search {% endblock title %}
+
+{% block content %}
+<!-- Search Start -->
+    <section>
+        <div class="container-fluid shadow m-3">
+            <div class="d-flex justify-content-center align-items-stretch">
+                <h4>Search</h4>
+            </div>
+            <div class="row">
+                {% for product in product_list %}
+                    <div class="col-sm-12 col-md-6 col-lg-3 shadow d-flex flex-column justify-content-center align-items-center my-2">
+                        <a href="{% url 'product-info' product.slug %}">
+                            {% thumbnail product.image "400x300" crop="center" as im %}
+                                <img class="new m-2 img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                            {% endthumbnail %}
+                            <h5 class="text-dark text-center m-2">{{ product.type }} {{ product.category }}</h5>
+                        </a>
+                    </div>
+                {% empty %}
+                    <div class="d-flex justify-content-start align-items-stretch col-12">
+                        <h4>No Results found for search...</h4>
+                    </div>
+                    {% for product in products %}
+                        <div class="col-sm-12 col-md-6 col-lg-3 shadow d-flex flex-column justify-content-center align-items-center my-2">
+                            <a href="{% url 'product-info' product.slug %}">
+                                {% thumbnail product.image "400x300" crop="center" as im %}
+                                    <img class="new m-2 img-responsive" src="{{ im.url }}" alt="{{ im.image }}">
+                                {% endthumbnail %}
+                                <h5 class="text-dark text-center m-2">{{ product.type }} {{ product.category }}</h5>
+                            </a>
+                        </div>
+
+                    {% empty %}
+                        <div class="d-flex justify-content-start align-items-stretch">
+                            <h4>There are no products on market yet. Try again later. Thank You</h4>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+<!-- Search Stop -->
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}

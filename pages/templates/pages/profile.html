@@ -1,0 +1,355 @@
+{% extends 'pages/base.html' %}
+
+{% load cart_template_tags %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% load thumbnail %}
+
+{% load wishlist_template_tags %}
+
+{% block title %} {{ site_name }} - Account Information {% endblock title %}
+
+{% block content %}
+    <div class="container my-3 mx-auto">
+        <div class="row">
+            <!-- Contact and Personal Information Start -->
+            <div class="col-12 col-lg-8">
+
+                <!-- Profile Image Start -->
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-6 col-lg-4 text-center">
+                        {% thumbnail profile.image "150x150" crop="center" as im %}
+                            <img class="rounded-circle img-responsive text-center my-2" src="{{ im.url }}" alt="{{ im }}">
+                        {% endthumbnail %}
+                    </div>
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-8 my-1 d-flex flex-column justify-content-center align-items-center align-items-sm-start">
+                        <h2 class="account-heading text-capitalize">{{ profile.user.username }}</h2>
+                        <p class="text-secondary">{{ profile.user.email }}</p>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-between">
+                                <a class="btn btn-rounded bg-dark text-white" href="{% url 'profile-update' %}">Edit Account Information</a>
+                                <a class="btn btn-rounded bg-dark text-white" href="{% url 'account_logout' %}">Sign Out</a>
+                            </div>
+                            <div class="d-flex flex-between">
+                                <a class="btn btn-rounded bg-dark text-white" href="{% url 'account_change_password' %}">Change Password</a>
+                                <a class="btn btn-rounded bg-dark text-white" href="{% url 'account_email' %}">Add/Change E-mail</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Profile Image Stop -->
+
+                <!-- Personal Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                        <legend class="border-bottom mb-4">Personal Information</legend>
+                        <div class="row">
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">First Name :</big class="text-capitalize">{{ profile.user.first_name }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Last Name :</big class="text-capitalize">{{ profile.user.last_name }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Age :</big>{{ profile.age }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Sex :</big>{{ profile.get_sex_display }}</span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Personal Information Stop -->
+
+                <!-- Contact Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                        <legend class="border-bottom mb-4">Contact Information</legend>
+                        <div class="row">
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Country :</big>{{ profile.country.name }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">State :</big>{{ profile.state }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">City :</big>{{ profile.city }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Address :</big>{{ profile.address }}</span>
+                            </div>
+                            <div class="col-12 col-md-6 px-2">
+                                <span><big class="mr-2">Zip Code:</big>{{ profile.zip_code }}</span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Contact Information Stop -->
+
+                <!-- Billing Address Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                        <legend class="border-bottom mb-4">Billing Address Information</legend>
+                        {% if billing_address %}
+                            <div class="row">
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Street Address :</big>{{ billing_address.address1 }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Apartment Address :</big>{{ billing_address.address2 }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Country :</big>{{ billing_address.country.name }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">State :</big>{{ billing_address.state }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">City :</big>{{ billing_address.city }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Zip Code :</big>{{ billing_address.zipcode }}</span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>You have no billing information saved</p>
+                        {% endif %}
+                    </fieldset>
+                </div>
+                <!-- Billing Addresss Information Stop -->
+
+                <!-- Shipping Address Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                        <legend class="border-bottom mb-4">Shipping Address Information</legend>
+                        {% if shipping_address %}
+                            <div class="row">
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Street Address :</big>{{ shipping_address.address1 }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Apartment Address :</big>{{ shipping_address.address2 }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Country :</big>{{ shipping_address.country.name }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">State :</big>{{ shipping_address.state }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">City :</big>{{ shipping_address.city }}</span>
+                                </div>
+                                <div class="col-12 col-md-6 px-2">
+                                    <span><big class="mr-2">Zip Code :</big>{{ shipping_address.zipcode }}</span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>You have no shipping information saved</p>
+                        {% endif %}
+                    </fieldset>
+                </div>
+                <!-- Shipping Address Information Stop -->
+            </div>
+            <!-- Contact and Personal Information Stop -->
+
+            <!-- Cart, Order and Wishlist Information Start -->
+            <div class="col-12 col-lg-4 d-flex flex-column justify-content-center">
+
+                <!-- Cart Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                    <!-- Legend Start -->
+                        <legend class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Your cart</span>
+                            <span class="badge badge-secondary badge-pill bg-dark">{{ request.user|cart_item_count }}</span>
+                        </legend>
+                    <!-- Legend Stop -->
+
+                    <!-- Cart Summary Start -->
+                        <ul class="list-group mb-3 z-depth-1">
+                            {% for item in cart_item_list %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">{{ item.product }}</h6>
+                                    <small class="text-muted">Quantity: {{ item.quantity }} </small>
+                                    <small class="text-muted mx-3">Price: {{ item.product.price }}</small>
+                                </div>
+                                <span class="text-muted">
+                                    {% if item.product.discount_price %}
+                                        N {{ item.get_total_discount_product_price| intcomma }}
+                                    {% else %}
+                                        N {{ item.get_total_product_price| intcomma }}
+                                    {% endif %}
+                                </span>
+                            </li>
+                            {% empty %}
+                            <span class="text-center font-weight-bold font-italic">There are no items in your cart.</span>
+                            {% endfor %}
+
+                            {% if cart_item_list.count %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span> </span>
+                                <a class="btn btn-rounded rounded-circle bg-dark text-white" href="{% url 'cart' %}">
+                                    See all
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    <!-- Cart Summary Stop -->
+                    </fieldset>
+                </div>
+                <!-- Cart Information Stop -->
+
+                <!-- Order Information Start -->
+                    <!-- Active Order Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                        <!-- Order Legend Start -->
+                            <legend class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">Active Orders</span>
+                                <span class="badge badge-secondary badge-pill bg-dark">{{ active_orders_count }}</span>
+                            </legend>
+                        <!-- Order Legend Stop -->
+
+                        <!-- Order Summary Start -->
+                            <ul class="list-group mb-3 z-depth-1">
+                                {% for item in active_orders %}
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">{{ item.product_name }}</h6>
+                                        <small class="text-muted">Quantity: {{ item.quantity }} </small>
+                                        <small class="text-muted mx-3">Size: {{ item.product_size }} </small><br>
+                                        <small class="text-muted">Status:
+                                            {% if item.status == 'RR' %}
+                                                Refund Requested
+                                            {% elif item.status == 'BD' %}
+                                                Being Delivered
+                                            {% else %}
+                                                Processing
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <span class="text-muted">
+                                        N {{ item.product_price }}
+                                    </span>
+                                </li>
+                                {% empty %}
+                                <span class="text-center font-weight-bold font-italic">You have no active orders.</span>
+                                {% endfor %}
+                                {% if active_orders %}
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span> </span>
+                                        <a class="btn btn-rounded rounded-circle bg-dark text-white" href="{% url 'order-summary' %}">
+                                            See all
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        <!-- Order Summary Stop -->
+                        </fieldset>
+                    </div>
+                    <!-- Active Order Information Stop -->
+
+                    <!-- In-Active Order Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                        <!-- Order Legend Start -->
+                            <legend class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted">In-Active Orders</span>
+                                <span class="badge badge-secondary badge-pill bg-dark">{{ inactive_orders_count }}</span>
+                            </legend>
+                        <!-- Order Legend Stop -->
+
+                        <!-- Order Summary Start -->
+                            <ul class="list-group mb-3 z-depth-1">
+                                {% for item in inactive_orders %}
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">{{ item.product_name }}</h6>
+                                        <small class="text-muted">Quantity: {{ item.quantity }} </small>
+                                        <small class="text-muted mx-3">Size: {{ item.product_size }}</small><br>
+                                        <small class="text-muted">Status:
+                                            {% if item.status == 'RG' %}
+                                                Refund Granted
+                                            {% else %}
+                                                Delivered
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <span class="text-muted">
+                                        N {{ item.product_price }}
+                                    </span>
+                                </li>
+                                {% empty %}
+                                <span class="text-center font-weight-bold font-italic">You have no in-active orders.</span>
+                                {% endfor %}
+                                {% if inactive_orders %}
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span> </span>
+                                        <a class="btn btn-rounded rounded-circle bg-dark text-white" href="{% url 'order-summary' %}">
+                                            See all
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        <!-- Order Summary Stop -->
+                        </fieldset>
+                    </div>
+                    <!-- In-Active Order Information Stop -->
+                <!-- Order Information Stop -->
+
+                <!-- Wishlist Information Start -->
+                <div class="my-2">
+                    <fieldset>
+                    <!-- Legend Start -->
+                        <legend class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Your Wishlist</span>
+                            <span class="badge badge-secondary badge-pill bg-dark">{{ request.user|wishlist_item_count }}</span>
+                        </legend>
+                    <!-- Legend Stop -->
+
+                    <!-- Wishlist Summary Start -->
+                        <ul class="list-group mb-3 z-depth-1">
+                            {% for item in wishlist %}
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0 text-capitalize">{{ item.product.parent.name }}</h6>
+                                        <small class="text-muted">Size: {{ item.product.size }}</small>
+                                    </div>
+                                    <span class="text-muted">
+                                        {% if item.product.discount_price %}
+                                            N {{ item.product.discount_price| intcomma }}
+                                        {% else %}
+                                            N {{ item.product.price| intcomma }}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% empty %}
+                                <span class="text-center font-weight-bold font-italic">There are no items in your cart.</span>
+                            {% endfor %}
+
+                            {% if wishlist %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span> </span>
+                                <a class="btn btn-rounded rounded-circle bg-dark text-white" href="{% url 'wishlist' %}">
+                                    See all
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    <!-- Wishlist Summary Stop -->
+                    </fieldset>
+                </div>
+                <!-- Wishlist Information Stop -->
+            </div>
+            <!-- Cart, Order and Wishlist Information Stop -->
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}

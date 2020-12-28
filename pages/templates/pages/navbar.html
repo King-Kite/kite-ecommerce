@@ -1,0 +1,79 @@
+{% load cart_template_tags %}
+
+{% load wishlist_template_tags %}
+
+<div>
+    <!-- Navbar Start-->
+    <nav class="navbar navbar-expand-lg bg-light navbar-light sticky-top py-0">
+        <!-- Brand -->
+        <a class="navbar-brand text-dark font-weight-bold mx-sm-2 mx-md-3" href="{% url 'home' %}">Kite</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse mx-lg-5" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-dark font-weight-bold" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-dark font-weight-bold" href="{% url 'products' %}">Products</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-dark font-weight-bold" href="{% url 'contact' %}">Contact Us</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-dark font-weight-bold" href="{% url 'about' %}">About Us</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav mr-lg-3 ml-lg-auto">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'cart' %}">
+                            <i class="medium bx bx-cart-alt"></i>
+                            Cart
+                            {# <span class="badge badge-dark badge-pill">{{ request.user|cart_item_quantity_count }}</span> #}
+                            <span class="badge badge-dark badge-pill">{{ request.user|cart_item_count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'wishlist' %}">
+                            <i class="medium bx bx-task-x"></i>
+                            Wishlist
+                            <span class="badge badge-dark badge-pill">{{ request.user|wishlist_item_count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'profile' %}">Account</a>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav mr-lg-3 ml-lg-auto">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Sign Up</a>
+                    </li>
+                </ul>
+            {% endif %}
+            <form class="form-inline d-lg-none md-form my-0" action="{% url 'search' %}" method="GET">
+                <input name="q" class="form-control w-50 px-3 mr-sm-2" type="search" placeholder="Search Type, Category or Name of Product e.g 'Latex', 'Pillow', 'Air Filled Mattress' e.t.c..." aria-label="Search">
+                <button class="btn bg-light" type="submit"><i class="bx bx-search" aria-hidden="true"></i></button>
+            </form>
+        </div>
+    </nav>
+    <!-- Navbar Stop-->
+
+    <!-- Search Bar Start -->
+    <div class="w-100 d-none d-lg-block">
+        <form class="form-inline md-form my-0 mx-5" action="{% url 'search' %}" method="GET">
+            <input name="q" class="form-control w-75 px-3 mr-sm-2" type="search" placeholder="Search Type, Category or Name of Product e.g 'Latex', 'Pillow', 'Air Filled Mattress' e.t.c..." aria-label="Search">
+            <button class="btn btn-elegant btn-rounded btn-sm text-white my-0" type="submit">Search</button>
+        </form>
+    </div>
+    <!-- Search Bar Stop-->
+</div>

@@ -1,0 +1,226 @@
+{% extends 'pages/base.html' %}
+
+{% load cart_template_tags %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% load thumbnail %}
+
+{% block title %} {{ site_name }} - Account Information {% endblock title %}
+
+{% block content %}
+    <div class="container my-3 mx-auto">
+        <div class="row">
+            <!-- Contact and Personal Information Start -->
+            <div class="col-12">
+                <!-- Form Start -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Profile Image Start -->
+                    <div class="row">
+                        <div class="col-12 col-sm-4 col-md-6 col-lg-4 text-center">
+                            {% thumbnail user.profile.image "150x150" crop="center" as im %}
+                                <img class="rounded-circle img-responsive text-center my-2" src="{{ user.profile.image.url }}" alt="{{ user.profile.image }}">
+                            {% endthumbnail %}
+                                <p><small class="text-center mx-4">{{ p_form.image }}</small></p>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-6 col-lg-8 my-1 d-flex flex-column justify-content-center align-items-center align-items-sm-start">
+                            <h2 class="account-heading text-capitalize">{{ user.username }}</h2>
+                            <p class="text-secondary">{{ user.email }}</p>
+                        </div>
+                    </div>
+                    <!-- Profile Image Stop -->
+
+                    <!-- Personal Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                            <legend class="border-bottom mb-4">Personal Information</legend>
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ u_form.first_name.label }}
+                                    </label>
+                                    {{ u_form.first_name }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ u_form.last_name.label }}
+                                    </label>
+                                    {{ u_form.last_name }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.age.label }}
+                                    </label>
+                                    {{ p_form.age }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.sex.label }}
+                                    </label>
+                                    <div class="d-flex">
+                                        {% for sex in p_form.sex %}
+                                            <div class=mx-2>{{ sex }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Personal Information Stop -->
+
+                    <!-- Contact Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                            <legend class="border-bottom mb-4">Contact Information</legend>
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.country.label }}
+                                    </label>
+                                    {{ p_form.country }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.state.label }}
+                                    </label>
+                                    {{ p_form.state }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.city.label }}
+                                    </label>
+                                    {{ p_form.city }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.address.label }}
+                                    </label>
+                                    {{ p_form.address }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ p_form.zip_code.label }}
+                                    </label>
+                                    {{ p_form.zip_code }}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Contact Information Stop -->
+
+                    <!-- Billing Address Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                            <legend class="border-bottom mb-4">Billing Address Information</legend>
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Street Address
+                                    </label>
+                                    {{ b_form.billing_address1 }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Apartment Address/No.
+                                    </label>
+                                    {{ b_form.billing_address2 }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ b_form.billing_country.label }}
+                                    </label>
+                                    {{ b_form.billing_country }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        State
+                                    </label>
+                                    {{ b_form.billing_state }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        City
+                                    </label>
+                                    {{ b_form.billing_city }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Zip-Code
+                                    </label>
+                                    {{ b_form.billing_zipcode }}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Billing Addressshipping Information Stop -->
+
+                    <!-- Shipping Address Information Start -->
+                    <div class="my-2">
+                        <fieldset>
+                            <legend class="border-bottom mb-4">Shipping Address Information</legend>
+                            <div class="row">
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Street Address
+                                    </label>
+                                    {{ s_form.shipping_address1 }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Apartment Address/No.
+                                    </label>
+                                    {{ s_form.shipping_address2 }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        {{ s_form.shipping_country.label }}
+                                    </label>
+                                    {{ s_form.shipping_country }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        State
+                                    </label>
+                                    {{ s_form.shipping_state }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        City
+                                    </label>
+                                    {{ s_form.shipping_city }}
+                                </div>
+                                <div class="col-12 col-md-6 form-group px-2">
+                                    <label>
+                                        Zip-Code
+                                    </label>
+                                    {{ s_form.shipping_zipcode }}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Shipping Address Information Stop -->
+
+                    <!-- Update Button Start -->
+                    <div class="container">
+                        <div class="d-flex my-2 m-md-4 justify-content-center">
+                            <button class="btn btn-dark p-3 text-light" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Update Button Stop -->
+                </form>
+                <!-- Form Stop-->
+            </div>
+            <!-- Contact and Personal Information Stop -->
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    {% include 'pages/footer.html' %}
+{% endblock footer %}
